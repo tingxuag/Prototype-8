@@ -9,7 +9,11 @@ public class cardScript : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Color _originalColor;
 
+    private bool _isClickable = false;
+
     private static readonly Color GrayColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
+    public event Action<cardScript> OnCardClicked;
 
     private void Awake()
     {
@@ -17,15 +21,21 @@ public class cardScript : MonoBehaviour
         _originalColor = _spriteRenderer.color;
     }
 
-    void Start()
+    void Start() { }
+    void Update() { }
+
+    /// <summary>
+    /// Enables or disables click detection on this card.
+    /// </summary>
+    public void SetClickable(bool clickable)
     {
-        
+        _isClickable = clickable;
     }
 
-    void Update()
-    {
-        
-    }
+    /// <summary>
+    /// Returns whether this card is currently clickable.
+    /// </summary>
+    public bool IsClickable() => _isClickable;
 
     /// <summary>
     /// Sets the sprite color to gray.
