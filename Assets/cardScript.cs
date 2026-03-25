@@ -6,16 +6,56 @@ public class cardScript : MonoBehaviour
 {
     private Coroutine _moveCoroutine;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private SpriteRenderer _spriteRenderer;
+    private Color _originalColor;
+
+    private static readonly Color GrayColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
+    private void Awake()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalColor = _spriteRenderer.color;
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+
+    /// <summary>
+    /// Sets the sprite color to gray.
+    /// </summary>
+    public void SetColorGray()
+    {
+        _spriteRenderer.color = GrayColor;
+    }
+
+    /// <summary>
+    /// Restores the sprite color to the value it had when the object first awoke.
+    /// </summary>
+    public void RestoreOriginalColor()
+    {
+        _spriteRenderer.color = _originalColor;
+    }
+
+    /// <summary>
+    /// Immediately teleports this GameObject to the target position, cancelling any move in progress.
+    /// </summary>
+    /// <param name="position">World-space position to snap to.</param>
+    public void SnapTo(Vector3 position)
+    {
+        if (_moveCoroutine != null)
+        {
+            StopCoroutine(_moveCoroutine);
+            _moveCoroutine = null;
+        }
+
+        transform.position = position;
     }
 
     /// <summary>
